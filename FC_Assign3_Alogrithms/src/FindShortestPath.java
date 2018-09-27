@@ -4,9 +4,12 @@ public class FindShortestPath {
 
 	public static void find(int source, int target, boolean[][] graph) {
 	
+		int distance=0;
+		
 	//check if source and target are directly next to each other
 	if(graph[source][target]) {
-		System.out.println("neighbours, shortest path = 1");
+		distance=1;
+		//System.out.println("neighbours, shortest path = 1");
 		
 	}else {
 		
@@ -102,8 +105,20 @@ public class FindShortestPath {
 			System.out.println("");
 		}
 		
+		for(int i=0;i<path.length;i++) {
+			if(path[i][target]>0) {
+				distance=path[i][target];
+				break;
+			}
+		}
+		
+		
+		
 	} //end if
 		
+	System.out.println("Least number of edges between "+source+" and "+target+" is "+distance);
+	
+	
 	} //end find
 	
 	//checking source and target are valid input
@@ -120,8 +135,8 @@ public class FindShortestPath {
 	
 	public static void main(String[] args) {
 
-		int source=3;
-		int target=0;
+		int source=1;
+		int target=5;
 		
 		AdjacencyMatrix obj = new AdjacencyMatrix( 6 );
 

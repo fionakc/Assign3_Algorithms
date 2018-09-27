@@ -5,44 +5,41 @@ public class FindShortestPath {
 
 	public static void find(int source, int target, boolean[][] graph) {
 	
+		//setting up variables
 		int distance=0;
+		int value=0;
 		
-	//check if source and target are directly next to each other
-//	if(graph[source][target]) {
-//		distance=1;
-//		//System.out.println("neighbours, shortest path = 1");
-//		
-//	}else {
-		
+		//create 2D array of integers to hold path distance data
 		Integer[][] path=new Integer[graph.length][graph.length];
 		
+		//create stack to hold integer values
+		Stack<Integer> stack = new Stack<Integer>();
+		
+		//initialise path matrix with 0 values
 		for(int i=0;i<path.length;i++) {
 			for (int j=0;j<path[0].length;j++) {
 				path[i][j]=0;
 			}
 		}
 				
-		int value=0;
-		
-		//visited array of possible maximum size
+		//create visited array of possible maximum size
 		boolean [] visited=new boolean[graph.length];
 		
-		//create stack of integers
-		Stack<Integer> stack = new Stack<Integer>();
-		//Stack<Integer> prev=new Stack<Integer>();
-		
+	
 		//put source into start of stack
 		stack.push(source);
-		//prev.push(source);
 		
+		//create array to hold previous node values
 		Integer[]prevNodeArray=new Integer[graph.length];
+		
+		//initialise array with source values
 		for(int i=0;i<prevNodeArray.length;i++) {
 			prevNodeArray[i]=source;
 		}
 		
-		//int prevNode=source;
+		//create current node, initialise to source
 		int currentNode=source;
-		//int prevTemp=source;
+
 		
 		//while there is something in the stack
 		while(!stack.empty()) {
@@ -58,38 +55,34 @@ public class FindShortestPath {
 			//mark currently visited node as having been visited
 			visited[ currentNode ] = true;
 			
-			System.out.println( currentNode );
+			//System.out.println( currentNode );
 			
-			//copy of neighbours
+			//take a copy of neighbours of current node
 			boolean[]neighbours=graph[currentNode];
 			
-			
-			//prevNode=prev.pop();
-			
+
 			//for every neighbour
 			for( int i = 0; i < neighbours.length; ++i ){
-				//System.out.println("loop");
 
-				//if not visited neighbour and neighbour not in stack and is a neighbour, add neighbour to stack
+				//if have not visited neighbour and neighbour not in stack and is a neighbour
 				if( ! visited[ i ] && ! stack.contains( i ) && neighbours[i])  {
+					//add neighbour[i] to stack
 					stack.push( i );
+					//save current node into prevNode array
 					prevNodeArray[i]=currentNode;
-					//prev.push(i);
-					//prevtemp is peek? >>move outside loop?
-					//prevTemp=stack.peek();
+					
+					//set the value based on the previous node and current node from path matrix (this is a distance from source)
 					value=path[prevNodeArray[currentNode]][currentNode];
+					//use this value to save a distance from source into path matrix
 					path[currentNode][i]=value+1;
-					//System.out.println("stack input "+stack.peek());
+
 				} //end if
 				
 			} //end for
-//			if(!stack.empty()) {
-//				prevTemp=stack.peek();
-//			}
-			
+
 		} //end while
 		
-		
+		//print out path matrix
 		for(int i=0;i<path.length;i++) {
 			for (int j=0;j<path[0].length;j++) {
 				System.out.print(path[i][j]+" , ");
@@ -97,6 +90,7 @@ public class FindShortestPath {
 			System.out.println("");
 		}
 		
+		//find distance from source to target from path matrix
 		for(int i=0;i<path.length;i++) {
 			if(path[i][target]>0) {
 				distance=path[i][target];
@@ -104,31 +98,40 @@ public class FindShortestPath {
 			}
 		}
 		
+		//print out distance
+		System.out.println("Least number of edges between "+source+" and "+target+" is "+distance);
 		
-		
-//	} //end if
-		
-	ArrayList<Integer> nodePath=nodePath(source, target, prevNodeArray);
-	System.out.println("Least number of edges between "+source+" and "+target+" is "+distance);
-	System.out.print("The node path is: ");
-	for(int i=nodePath.size()-1;i>=0;i--) {
-		System.out.print(nodePath.get(i)+" , ");
-	}
-	System.out.println();
+		//find nodepath from source to target	
+		ArrayList<Integer> nodePath=nodePath(source, target, prevNodeArray);
+		//print out node path
+		System.out.print("The node path is: ");
+		for(int i=nodePath.size()-1;i>=0;i--) {
+			System.out.print(nodePath.get(i)+" , ");
+		}
+		System.out.println();
 	
 	} //end find
 	
+	
+	//take prevNodes array, return the nodePath as an arraylist
 	public static ArrayList<Integer> nodePath(int source, int target, Integer[] prevNodes){
+		//create arraylist
 		ArrayList<Integer> nodePath=new ArrayList<Integer>();
+		//add the target into arraylist
 		nodePath.add(target);
+		//create the nodeval, give it a value
 		int nodeVal=target;
+		//loop while haven't reached source
 		while(nodeVal!=source) {
+			//find new nodeval
 			nodeVal=prevNodes[nodeVal];
+			//add nodeval into nodePath
 			nodePath.add(nodeVal);
 		}
 				
 		return nodePath;
 	}
+	
 	
 	//checking source and target are valid input
 	public static int validInput(int source, int target, boolean[][] graph) {
@@ -142,10 +145,11 @@ public class FindShortestPath {
 		
 	}
 	
+	
 	public static void main(String[] args) {
 
 		int source=2;
-		int target=0;
+		int target=5;
 		
 		AdjacencyMatrix obj = new AdjacencyMatrix( 6 );
 
@@ -164,10 +168,7 @@ public class FindShortestPath {
 		if(isValid<0) {
 			System.out.println("Invalid inputs, cannot find path");
 		}else {
-		
-			//FindShortestPath bfs = new FindShortestPath();
-	
-			//not traversing correctly
+
 			System.out.println("---- Traversal (START) ----" );
 			find( source, target , obj.getGraph() );
 			System.out.println("---- Traversal (END) ----" );

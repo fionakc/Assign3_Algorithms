@@ -24,8 +24,8 @@ public class FindShortestPath {
 	public static Result find(int source, int target, boolean[][] graph) {
 	
 		//setting up variables
-		int distance=0;
-		int value=0;
+		//int distance=0;
+		//int value=0;
 		
 		//create 2D array of integers to hold path distance data
 		Integer[][] path=new Integer[graph.length][graph.length];
@@ -34,12 +34,12 @@ public class FindShortestPath {
 		//Stack<Integer> stack = new Stack<Integer>();
 		Queue<Integer> queue = new LinkedList<Integer>();
 		
-		//initialise path matrix with 0 values
-		for(int i=0;i<path.length;i++) {
-			for (int j=0;j<path[0].length;j++) {
-				path[i][j]=0;
-			}
-		}
+//		//initialise path matrix with 0 values
+//		for(int i=0;i<path.length;i++) {
+//			for (int j=0;j<path[0].length;j++) {
+//				path[i][j]=0;
+//			}
+//		}
 				
 		//create visited array of possible maximum size
 		boolean [] visited=new boolean[graph.length];
@@ -94,27 +94,30 @@ public class FindShortestPath {
 					prevNodeArray[i]=currentNode;
 					
 					//set the value based on the previous node and current node from path matrix (this is a distance from source)
-					value=path[prevNodeArray[currentNode]][currentNode];
+//					value=path[prevNodeArray[currentNode]][currentNode];
 					//use this value to save a distance from source into path matrix
-					path[currentNode][i]=value+1;
+//					path[currentNode][i]=value+1;
 
 				} //end if
 				
 			} //end for
 
+			if(currentNode==target) {
+				break;
+			}
 		} //end while
 		
 		
+		
 		//find distance from source to target from path matrix
-		for(int i=0;i<path.length;i++) {
-			if(path[i][target]>0) {
-				distance=path[i][target];
-				break;
-			}
-		}
+//		for(int i=0;i<prevNodeArray.length;i++) {
+//			System.out.print(i+": "+prevNodeArray[i]+"   ");
+//		}
+//		System.out.println();
 		
 		//find nodepath from source to target	
 		ArrayList<Integer> nodePath=nodePath(source, target, prevNodeArray);
+		int distance =nodePath.size()-1;
 		
 		Result result=new Result(distance, nodePath);
 		
@@ -165,8 +168,8 @@ public class FindShortestPath {
 	public static void main(String[] args) {
 
 		//choose source and target nodes
-		int source=1;
-		int target=4;
+		int source=3;
+		int target=5;
 		
 		//solution is broken, for this should produce 3, not 5
 		

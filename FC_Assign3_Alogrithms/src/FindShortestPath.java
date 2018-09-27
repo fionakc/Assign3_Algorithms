@@ -1,9 +1,10 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Stack;
 
 public class FindShortestPath {
 
-	public static void find(int source, int target, boolean[][] graph) {
+	public static Result find(int source, int target, boolean[][] graph) {
 	
 		//setting up variables
 		int distance=0;
@@ -82,13 +83,13 @@ public class FindShortestPath {
 
 		} //end while
 		
-		//print out path matrix
-		for(int i=0;i<path.length;i++) {
-			for (int j=0;j<path[0].length;j++) {
-				System.out.print(path[i][j]+" , ");
-			}
-			System.out.println("");
-		}
+//		//print out path matrix
+//		for(int i=0;i<path.length;i++) {
+//			for (int j=0;j<path[0].length;j++) {
+//				System.out.print(path[i][j]+" , ");
+//			}
+//			System.out.println("");
+//		}
 		
 		//find distance from source to target from path matrix
 		for(int i=0;i<path.length;i++) {
@@ -105,11 +106,14 @@ public class FindShortestPath {
 		ArrayList<Integer> nodePath=nodePath(source, target, prevNodeArray);
 		//print out node path
 		System.out.print("The node path is: ");
-		for(int i=nodePath.size()-1;i>=0;i--) {
+		for(int i=0;i<nodePath.size();i++) {
 			System.out.print(nodePath.get(i)+" , ");
 		}
 		System.out.println();
-	
+		
+		Result result=new Result(distance, nodePath);
+	return result;
+		
 	} //end find
 	
 	
@@ -121,6 +125,7 @@ public class FindShortestPath {
 		nodePath.add(target);
 		//create the nodeval, give it a value
 		int nodeVal=target;
+		
 		//loop while haven't reached source
 		while(nodeVal!=source) {
 			//find new nodeval
@@ -128,6 +133,9 @@ public class FindShortestPath {
 			//add nodeval into nodePath
 			nodePath.add(nodeVal);
 		}
+		
+		//reverse arraylist so it goes from source to target
+		Collections.reverse(nodePath);
 				
 		return nodePath;
 	}
@@ -148,10 +156,10 @@ public class FindShortestPath {
 	
 	public static void main(String[] args) {
 
-		int source=2;
-		int target=5;
+		int source=1;
+		int target=7;
 		
-		AdjacencyMatrix obj = new AdjacencyMatrix( 6 );
+		AdjacencyMatrix obj = new AdjacencyMatrix( 11 );
 
 		System.out.println("---- Graph (START) ----" );
 		obj.addEdge( 0, 1 );
@@ -160,6 +168,14 @@ public class FindShortestPath {
 		obj.addEdge( 2, 4 );
 		obj.addEdge( 3, 5 );
 		obj.addEdge( 4, 5 );
+		
+		obj.addEdge( 1, 6 );
+		obj.addEdge( 2, 10 );
+		obj.addEdge( 3, 7 );
+		obj.addEdge( 5, 8 );
+		obj.addEdge( 4, 9 );
+		obj.addEdge( 8, 9);
+		obj.addEdge(7, 6);
 		obj.print();
 		System.out.println("---- Graph (END) ----" );
 
@@ -170,7 +186,7 @@ public class FindShortestPath {
 		}else {
 
 			System.out.println("---- Traversal (START) ----" );
-			find( source, target , obj.getGraph() );
+			Result result = find( source, target , obj.getGraph() );
 			System.out.println("---- Traversal (END) ----" );
 		}
 	}

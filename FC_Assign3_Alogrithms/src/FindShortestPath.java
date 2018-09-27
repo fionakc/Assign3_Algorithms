@@ -25,26 +25,35 @@ public class FindShortestPath {
 		
 		//create stack of integers
 		Stack<Integer> stack = new Stack<Integer>();
-		//Stack<Integer> prev=new Stack<Integer>();
+		Stack<Integer> prev=new Stack<Integer>();
 		
 		//put source into start of stack
 		stack.push(source);
+		//prev.push(source);
+		
+		Integer[]prevNodeArray=new Integer[graph.length];
+		for(int i=0;i<prevNodeArray.length;i++) {
+			prevNodeArray[i]=source;
+		}
 		
 		int prevNode=source;
 		int currentNode=source;
+		int prevTemp=source;
 		
 		//while there is something in the stack
 		while(!stack.empty()) {
+			
 			//then ignore this
-			prevNode=currentNode;
+			//prevNode=currentNode;
 			
 			//pull the top item from the stack
 			currentNode = stack.pop();
 			//if stack not empty, prevNode=peeps tack, else is currentnode???? - not here
 			//value++;
-			value=path[prevNode][currentNode];
 			
-			//prevnode=prevtemp
+			//value=path[prevNodeArray[currentNode]][currentNode]; //keep here?
+			
+			//prevNode=prevTemp;
 			
 			//if current node has already been visited, loop again
 			if( visited[ currentNode ] ) {
@@ -59,6 +68,9 @@ public class FindShortestPath {
 			//copy of neighbours
 			boolean[]neighbours=graph[currentNode];
 			
+			
+			//prevNode=prev.pop();
+			
 			//for every neighbour
 			for( int i = 0; i < neighbours.length; ++i ){
 				//System.out.println("loop");
@@ -66,13 +78,19 @@ public class FindShortestPath {
 				//if not visited neighbour and neighbour not in stack and is a neighbour, add neighbour to stack
 				if( ! visited[ i ] && ! stack.contains( i ) && neighbours[i])  {
 					stack.push( i );
+					prevNodeArray[i]=currentNode;
 					//prev.push(i);
 					//prevtemp is peek? >>move outside loop?
+					//prevTemp=stack.peek();
+					value=path[prevNodeArray[currentNode]][currentNode];
 					path[currentNode][i]=value+1;
-					System.out.println("stack input "+stack.peek());
+					//System.out.println("stack input "+stack.peek());
 				} //end if
 				
 			} //end for
+//			if(!stack.empty()) {
+//				prevTemp=stack.peek();
+//			}
 			
 		} //end while
 		
@@ -102,8 +120,8 @@ public class FindShortestPath {
 	
 	public static void main(String[] args) {
 
-		int source=2;
-		int target=5;
+		int source=3;
+		int target=0;
 		
 		AdjacencyMatrix obj = new AdjacencyMatrix( 6 );
 

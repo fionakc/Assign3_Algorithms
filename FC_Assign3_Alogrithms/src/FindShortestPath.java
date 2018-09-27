@@ -144,6 +144,8 @@ public class FindShortestPath {
 	//checking source and target are valid input
 	public static int validInput(int source, int target, boolean[][] graph) {
 		
+		
+		
 		//check that source and target integer values are both within indices of graph
 		if(source<graph.length && target<graph.length && source >=0 && target >=0) {
 			return 1;
@@ -163,7 +165,8 @@ public class FindShortestPath {
 		//solution is broken, for this should produce 3, not 5
 		
 		//initialise graph matrix
-		AdjacencyMatrix obj = new AdjacencyMatrix( 14 );
+		AdjacencyMatrix obj = new AdjacencyMatrix( 6 );
+//		AdjacencyMatrix obj = new AdjacencyMatrix( 14 );
 
 		//add in edges to graph matrix
 		System.out.println("---- Graph (START) ----" );
@@ -174,14 +177,14 @@ public class FindShortestPath {
 		obj.addEdge( 3, 5 );
 		obj.addEdge( 4, 5 );
 		
-		obj.addEdge( 1, 6 );
-		obj.addEdge( 2, 10 );
-		obj.addEdge( 3, 7 );
-		obj.addEdge( 5, 8 );
-		obj.addEdge( 4, 9 );
-		obj.addEdge( 8, 9 );
-		obj.addEdge( 7, 6 );
-		obj.addEdge(8, 7);
+//		obj.addEdge( 1, 6 );
+//		obj.addEdge( 2, 10 );
+//		obj.addEdge( 3, 7 );
+//		obj.addEdge( 5, 8 );
+//		obj.addEdge( 4, 9 );
+//		obj.addEdge( 8, 9 );
+//		obj.addEdge( 7, 6 );
+//		obj.addEdge( 8, 7 );
 		obj.print();
 		System.out.println("---- Graph (END) ----" );
 		System.out.println();
@@ -189,7 +192,7 @@ public class FindShortestPath {
 		//check for valid input of source and target values
 		int isValid=validInput(source, target, obj.getGraph());
 		
-		if(isValid<0) {
+		if(isValid<0 || obj.getGraph()==null) { //check for obj being null in isvalid??
 			System.out.println("Invalid inputs, cannot find path");
 		}else {
 

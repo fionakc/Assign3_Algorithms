@@ -25,16 +25,26 @@ public class FindShortestPath {
 		
 		//create stack of integers
 		Stack<Integer> stack = new Stack<Integer>();
+		//Stack<Integer> prev=new Stack<Integer>();
 		
 		//put source into start of stack
 		stack.push(source);
 		
+		int prevNode=source;
+		int currentNode=source;
+		
 		//while there is something in the stack
 		while(!stack.empty()) {
+			//then ignore this
+			prevNode=currentNode;
 			
 			//pull the top item from the stack
-			int currentNode = stack.pop();
-			value++;
+			currentNode = stack.pop();
+			//if stack not empty, prevNode=peeps tack, else is currentnode???? - not here
+			//value++;
+			value=path[prevNode][currentNode];
+			
+			//prevnode=prevtemp
 			
 			//if current node has already been visited, loop again
 			if( visited[ currentNode ] ) {
@@ -56,7 +66,9 @@ public class FindShortestPath {
 				//if not visited neighbour and neighbour not in stack and is a neighbour, add neighbour to stack
 				if( ! visited[ i ] && ! stack.contains( i ) && neighbours[i])  {
 					stack.push( i );
-					path[currentNode][i]=value;
+					//prev.push(i);
+					//prevtemp is peek? >>move outside loop?
+					path[currentNode][i]=value+1;
 					System.out.println("stack input "+stack.peek());
 				} //end if
 				

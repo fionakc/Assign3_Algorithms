@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Stack;
 
 public class FindShortestPath {
@@ -7,11 +8,11 @@ public class FindShortestPath {
 		int distance=0;
 		
 	//check if source and target are directly next to each other
-	if(graph[source][target]) {
-		distance=1;
-		//System.out.println("neighbours, shortest path = 1");
-		
-	}else {
+//	if(graph[source][target]) {
+//		distance=1;
+//		//System.out.println("neighbours, shortest path = 1");
+//		
+//	}else {
 		
 		Integer[][] path=new Integer[graph.length][graph.length];
 		
@@ -28,7 +29,7 @@ public class FindShortestPath {
 		
 		//create stack of integers
 		Stack<Integer> stack = new Stack<Integer>();
-		Stack<Integer> prev=new Stack<Integer>();
+		//Stack<Integer> prev=new Stack<Integer>();
 		
 		//put source into start of stack
 		stack.push(source);
@@ -39,25 +40,16 @@ public class FindShortestPath {
 			prevNodeArray[i]=source;
 		}
 		
-		int prevNode=source;
+		//int prevNode=source;
 		int currentNode=source;
-		int prevTemp=source;
+		//int prevTemp=source;
 		
 		//while there is something in the stack
 		while(!stack.empty()) {
 			
-			//then ignore this
-			//prevNode=currentNode;
-			
 			//pull the top item from the stack
 			currentNode = stack.pop();
-			//if stack not empty, prevNode=peeps tack, else is currentnode???? - not here
-			//value++;
-			
-			//value=path[prevNodeArray[currentNode]][currentNode]; //keep here?
-			
-			//prevNode=prevTemp;
-			
+
 			//if current node has already been visited, loop again
 			if( visited[ currentNode ] ) {
 				continue;
@@ -114,12 +106,29 @@ public class FindShortestPath {
 		
 		
 		
-	} //end if
+//	} //end if
 		
+	ArrayList<Integer> nodePath=nodePath(source, target, prevNodeArray);
 	System.out.println("Least number of edges between "+source+" and "+target+" is "+distance);
-	
+	System.out.print("The node path is: ");
+	for(int i=nodePath.size()-1;i>=0;i--) {
+		System.out.print(nodePath.get(i)+" , ");
+	}
+	System.out.println();
 	
 	} //end find
+	
+	public static ArrayList<Integer> nodePath(int source, int target, Integer[] prevNodes){
+		ArrayList<Integer> nodePath=new ArrayList<Integer>();
+		nodePath.add(target);
+		int nodeVal=target;
+		while(nodeVal!=source) {
+			nodeVal=prevNodes[nodeVal];
+			nodePath.add(nodeVal);
+		}
+				
+		return nodePath;
+	}
 	
 	//checking source and target are valid input
 	public static int validInput(int source, int target, boolean[][] graph) {
@@ -135,8 +144,8 @@ public class FindShortestPath {
 	
 	public static void main(String[] args) {
 
-		int source=1;
-		int target=5;
+		int source=2;
+		int target=0;
 		
 		AdjacencyMatrix obj = new AdjacencyMatrix( 6 );
 

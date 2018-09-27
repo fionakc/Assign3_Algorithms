@@ -14,6 +14,8 @@
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 
 public class FindShortestPath {
@@ -29,7 +31,8 @@ public class FindShortestPath {
 		Integer[][] path=new Integer[graph.length][graph.length];
 		
 		//create stack to hold integer values
-		Stack<Integer> stack = new Stack<Integer>();
+		//Stack<Integer> stack = new Stack<Integer>();
+		Queue<Integer> queue = new LinkedList<Integer>();
 		
 		//initialise path matrix with 0 values
 		for(int i=0;i<path.length;i++) {
@@ -43,7 +46,8 @@ public class FindShortestPath {
 		
 	
 		//put source into start of stack
-		stack.push(source);
+		//stack.push(source);
+		queue.add( source );
 		
 		//create array to hold previous node values
 		Integer[]prevNodeArray=new Integer[graph.length];
@@ -58,10 +62,11 @@ public class FindShortestPath {
 
 		
 		//while there is something in the stack
-		while(!stack.empty()) {
+		while(!queue.isEmpty()) {
 			
 			//pull the top item from the stack
-			currentNode = stack.pop();
+			//currentNode = stack.pop();
+			currentNode = queue.remove();
 
 			//if current node has already been visited, loop again
 			if( visited[ currentNode ] ) {
@@ -81,9 +86,10 @@ public class FindShortestPath {
 			for( int i = 0; i < neighbours.length; ++i ){
 
 				//if have not visited neighbour and neighbour not in stack and is a neighbour
-				if( ! visited[ i ] && ! stack.contains( i ) && neighbours[i])  {
+				if( ! visited[ i ] && ! queue.contains( i ) && neighbours[i])  {
 					//add neighbour[i] to stack
-					stack.push( i );
+					//stack.push( i );
+					queue.add( i );
 					//save current node into prevNode array
 					prevNodeArray[i]=currentNode;
 					
@@ -165,8 +171,8 @@ public class FindShortestPath {
 		//solution is broken, for this should produce 3, not 5
 		
 		//initialise graph matrix
-		AdjacencyMatrix obj = new AdjacencyMatrix( 6 );
-//		AdjacencyMatrix obj = new AdjacencyMatrix( 14 );
+//		AdjacencyMatrix obj = new AdjacencyMatrix( 6 );
+		AdjacencyMatrix obj = new AdjacencyMatrix( 14 );
 
 		//add in edges to graph matrix
 		System.out.println("---- Graph (START) ----" );
@@ -177,14 +183,14 @@ public class FindShortestPath {
 		obj.addEdge( 3, 5 );
 		obj.addEdge( 4, 5 );
 		
-//		obj.addEdge( 1, 6 );
-//		obj.addEdge( 2, 10 );
-//		obj.addEdge( 3, 7 );
-//		obj.addEdge( 5, 8 );
-//		obj.addEdge( 4, 9 );
-//		obj.addEdge( 8, 9 );
-//		obj.addEdge( 7, 6 );
-//		obj.addEdge( 8, 7 );
+		obj.addEdge( 1, 6 );
+		obj.addEdge( 2, 10 );
+		obj.addEdge( 3, 7 );
+		obj.addEdge( 5, 8 );
+		obj.addEdge( 4, 9 );
+		obj.addEdge( 8, 9 );
+		obj.addEdge( 7, 6 );
+		obj.addEdge( 8, 7 );
 		obj.print();
 		System.out.println("---- Graph (END) ----" );
 		System.out.println();

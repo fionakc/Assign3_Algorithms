@@ -1,3 +1,14 @@
+/**SWEN502 - Algorithms Assignment
+ * Fiona Crook
+ * 300442873
+ * 
+ */
+
+/*This class takes in a distance integer, and an path arraylist,
+ * and combines them into a single object
+ * 
+ */
+
 import java.util.ArrayList;
 
 public class Result {

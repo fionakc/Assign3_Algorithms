@@ -1,3 +1,13 @@
+/**SWEN502 - Algorithms Assignment
+ * Fiona Crook
+ * 300442873
+ * 
+ */
+
+/*Creates an adjacency matrix
+ * Used for the purposes of inputing data in FindShortestPath
+ * 
+ */
 
 public class AdjacencyMatrix {
 
@@ -30,13 +40,6 @@ public class AdjacencyMatrix {
 		for(int i=0;i<graph.length;i++) {
 			System.out.print(i+";");
 			for(int j=0;j<graph[0].length;j++) {
-				//System.out.print(graph[i][j]+",");
-				
-//				Dio's print stmt (??), very weird
-//				if(graph[i][j]) {
-//					System.out.print(graph[i][j]+",");
-//				}
-				
 				if(graph[i][j]) {
 					System.out.print(1+",");
 				}else {

@@ -1,9 +1,24 @@
+/**SWEN502 - Algorithms Assignment
+ * Fiona Crook
+ * 300442873
+ * 
+ */
+
+/*Takes a source node, target node, and adjacency matrix
+ * Returns an object containing the shortest distance (number of edges) between the two nodes
+ * and the path taken
+ * 
+ * 
+ * Main method at the bottom of the page
+ */
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Stack;
 
 public class FindShortestPath {
 
+	//find the shortest path between source and target in the graph, return as Result object
 	public static Result find(int source, int target, boolean[][] graph) {
 	
 		//setting up variables
@@ -83,13 +98,6 @@ public class FindShortestPath {
 
 		} //end while
 		
-//		//print out path matrix
-//		for(int i=0;i<path.length;i++) {
-//			for (int j=0;j<path[0].length;j++) {
-//				System.out.print(path[i][j]+" , ");
-//			}
-//			System.out.println("");
-//		}
 		
 		//find distance from source to target from path matrix
 		for(int i=0;i<path.length;i++) {
@@ -99,19 +107,11 @@ public class FindShortestPath {
 			}
 		}
 		
-		//print out distance
-		System.out.println("Least number of edges between "+source+" and "+target+" is "+distance);
-		
 		//find nodepath from source to target	
 		ArrayList<Integer> nodePath=nodePath(source, target, prevNodeArray);
-		//print out node path
-		System.out.print("The node path is: ");
-		for(int i=0;i<nodePath.size();i++) {
-			System.out.print(nodePath.get(i)+" , ");
-		}
-		System.out.println();
 		
 		Result result=new Result(distance, nodePath);
+		
 	return result;
 		
 	} //end find
@@ -156,11 +156,16 @@ public class FindShortestPath {
 	
 	public static void main(String[] args) {
 
+		//choose source and target nodes
 		int source=1;
-		int target=7;
+		int target=4;
 		
-		AdjacencyMatrix obj = new AdjacencyMatrix( 11 );
+		//solution is broken, for this should produce 3, not 5
+		
+		//initialise graph matrix
+		AdjacencyMatrix obj = new AdjacencyMatrix( 14 );
 
+		//add in edges to graph matrix
 		System.out.println("---- Graph (START) ----" );
 		obj.addEdge( 0, 1 );
 		obj.addEdge( 0, 2 );
@@ -174,11 +179,14 @@ public class FindShortestPath {
 		obj.addEdge( 3, 7 );
 		obj.addEdge( 5, 8 );
 		obj.addEdge( 4, 9 );
-		obj.addEdge( 8, 9);
-		obj.addEdge(7, 6);
+		obj.addEdge( 8, 9 );
+		obj.addEdge( 7, 6 );
+		obj.addEdge(8, 7);
 		obj.print();
 		System.out.println("---- Graph (END) ----" );
+		System.out.println();
 
+		//check for valid input of source and target values
 		int isValid=validInput(source, target, obj.getGraph());
 		
 		if(isValid<0) {
@@ -186,7 +194,19 @@ public class FindShortestPath {
 		}else {
 
 			System.out.println("---- Traversal (START) ----" );
+			
 			Result result = find( source, target , obj.getGraph() );
+			
+			//print the distance
+			System.out.println("Least number of edges between node "+source+" and node "+target+" is "+result.getDistance());
+			
+			//print the node path
+			System.out.print("The node path is: ");
+			for(int i=0;i<result.getNodePath().size();i++) {
+				System.out.print(result.getNodePath().get(i)+" , ");
+			}
+			System.out.println();
+			
 			System.out.println("---- Traversal (END) ----" );
 		}
 	}

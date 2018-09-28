@@ -20,33 +20,18 @@ import java.util.Stack;
 
 public class FindShortestPath {
 
-	//find the shortest path between source and target in the graph, return as Result object
+	/*find the shortest path between source and target in the graph, return as Result object
+	 */
 	public static Result find(int source, int target, boolean[][] graph) {
 	
-		//setting up variables
-		//int distance=0;
-		//int value=0;
 		
-		//create 2D array of integers to hold path distance data
-		Integer[][] path=new Integer[graph.length][graph.length];
-		
-		//create stack to hold integer values
-		//Stack<Integer> stack = new Stack<Integer>();
+		//create queue to hold integer values
 		Queue<Integer> queue = new LinkedList<Integer>();
-		
-//		//initialise path matrix with 0 values
-//		for(int i=0;i<path.length;i++) {
-//			for (int j=0;j<path[0].length;j++) {
-//				path[i][j]=0;
-//			}
-//		}
 				
 		//create visited array of possible maximum size
 		boolean [] visited=new boolean[graph.length];
-		
-	
-		//put source into start of stack
-		//stack.push(source);
+			
+		//put source into start of queue
 		queue.add( source );
 		
 		//create array to hold previous node values
@@ -61,11 +46,10 @@ public class FindShortestPath {
 		int currentNode=source;
 
 		
-		//while there is something in the stack
+		//while there is something in the queue
 		while(!queue.isEmpty()) {
 			
-			//pull the top item from the stack
-			//currentNode = stack.pop();
+			//pull the top item from the queue
 			currentNode = queue.remove();
 
 			//if current node has already been visited, loop again
@@ -76,8 +60,6 @@ public class FindShortestPath {
 			//mark currently visited node as having been visited
 			visited[ currentNode ] = true;
 			
-			//System.out.println( currentNode );
-			
 			//take a copy of neighbours of current node
 			boolean[]neighbours=graph[currentNode];
 			
@@ -87,33 +69,23 @@ public class FindShortestPath {
 
 				//if have not visited neighbour and neighbour not in stack and is a neighbour
 				if( ! visited[ i ] && ! queue.contains( i ) && neighbours[i])  {
-					//add neighbour[i] to stack
-					//stack.push( i );
-					queue.add( i );
-					//save current node into prevNode array
-					prevNodeArray[i]=currentNode;
 					
-					//set the value based on the previous node and current node from path matrix (this is a distance from source)
-//					value=path[prevNodeArray[currentNode]][currentNode];
-					//use this value to save a distance from source into path matrix
-//					path[currentNode][i]=value+1;
+					//add neighbour[i] to queue
+					queue.add( i );
+					
+					//save current node into prevNode array at location i
+					prevNodeArray[i]=currentNode;
 
 				} //end if
 				
 			} //end for
 
+			//stop the while loop once found target
 			if(currentNode==target) {
 				break;
 			}
 		} //end while
 		
-		
-		
-		//find distance from source to target from path matrix
-//		for(int i=0;i<prevNodeArray.length;i++) {
-//			System.out.print(i+": "+prevNodeArray[i]+"   ");
-//		}
-//		System.out.println();
 		
 		//find nodepath from source to target	
 		ArrayList<Integer> nodePath=nodePath(source, target, prevNodeArray);
@@ -126,12 +98,15 @@ public class FindShortestPath {
 	} //end find
 	
 	
-	//take prevNodes array, return the nodePath as an arraylist
+	/*take prevNodes array, return the nodePath as an arraylist
+	 */
 	public static ArrayList<Integer> nodePath(int source, int target, Integer[] prevNodes){
 		//create arraylist
 		ArrayList<Integer> nodePath=new ArrayList<Integer>();
+		
 		//add the target into arraylist
 		nodePath.add(target);
+		
 		//create the nodeval, give it a value
 		int nodeVal=target;
 		
@@ -150,11 +125,14 @@ public class FindShortestPath {
 	}
 	
 	
-	//checking source and target are valid input
+	/*checking source and target are valid input
+	 */
 	public static int validInput(int source, int target, boolean[][] graph) {
 		
-		
-		
+		if(graph==null) {
+			System.out.println("null graph");
+			return -1;
+		}
 		//check that source and target integer values are both within indices of graph
 		if(source<graph.length && target<graph.length && source >=0 && target >=0) {
 			return 1;
@@ -169,11 +147,10 @@ public class FindShortestPath {
 
 		//choose source and target nodes
 		int source=3;
-		int target=5;
+		int target=8;
 		
-		//solution is broken, for this should produce 3, not 5
 		
-		//initialise graph matrix
+		//initialise graph matrix for testing purposes
 //		AdjacencyMatrix obj = new AdjacencyMatrix( 6 );
 		AdjacencyMatrix obj = new AdjacencyMatrix( 14 );
 
@@ -194,14 +171,15 @@ public class FindShortestPath {
 		obj.addEdge( 8, 9 );
 		obj.addEdge( 7, 6 );
 		obj.addEdge( 8, 7 );
-		obj.print();
+		//obj.print();
 		System.out.println("---- Graph (END) ----" );
 		System.out.println();
+		
 
 		//check for valid input of source and target values
 		int isValid=validInput(source, target, obj.getGraph());
 		
-		if(isValid<0 || obj.getGraph()==null) { //check for obj being null in isvalid??
+		if(isValid<0) { 
 			System.out.println("Invalid inputs, cannot find path");
 		}else {
 

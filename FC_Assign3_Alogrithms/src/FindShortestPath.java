@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Stack;
 
 public class FindShortestPath {
 
@@ -147,14 +146,14 @@ public class FindShortestPath {
 
 		//choose source and target nodes
 		int source=3;
-		int target=8;
+		int target=1;
 		
 		
 		//initialise graph matrix for testing purposes
 //		AdjacencyMatrix obj = new AdjacencyMatrix( 6 );
 		AdjacencyMatrix obj = new AdjacencyMatrix( 14 );
 
-		//add in edges to graph matrix
+		//add in edges to graph matrix for testing purposes
 		System.out.println("---- Graph (START) ----" );
 		obj.addEdge( 0, 1 );
 		obj.addEdge( 0, 2 );
